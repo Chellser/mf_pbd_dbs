@@ -1,6 +1,7 @@
+# when using classes we should always create a test for the class to ensure that our code is working correctly
+#it makes it easier to write the code as we only need to change the test code until we have it right
 
-
-from Calc_test import Calculator
+from Calculator import Calculator
 import unittest
 
 class TestCalc(unittest.TestCase): 
@@ -21,7 +22,7 @@ class TestCalc(unittest.TestCase):
         result = Calculator().add (2,3)
         self.assertEqual(5, result)
         try:
-            Calculator().add('2', '5')
+            Calculator().add('a', '5')
             self.fail('should have thrown error')
         except ValueError:
             pass
@@ -63,7 +64,7 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(15625, result) 
         result = Calculator().cube (-2)
         self.assertEqual('error', result)     
-        result = Calculator().exponent (0)
+        result = Calculator().cube (0)
         self.assertEqual('error', result)  
         
     def test_factorial(self):
@@ -74,36 +75,27 @@ class TestCalc(unittest.TestCase):
 
     def test_sin_x(self):
         result = Calculator().sin_x(23)
-        self.assertEqual(0.390731127744, result)
+        self.assertEqual(0.390731127744, round(result, 12))
         result = Calculator().sin_x(-3)
-        self.assertEqual(-0.0523359562429, result) 
+        self.assertEqual(-0.0523359562429, round(result, 13)) 
         result = Calculator().sin_x(0)
         self.assertEqual(0, result)
         
     def test_cos_x(self):
         result = Calculator().cos_x(23)
-        self.assertEqual(0.920504836759, result)
+        self.assertEqual(0.920504836759, round(result, 12))
         result = Calculator().cos_x(0)
         self.assertEqual(1.0, result)         
         result = Calculator().cos_x(-3)
-        self.assertEqual(0.998629534755, result)
+        self.assertEqual(0.998629534755, round(result, 12))
         
     def test_tan_x(self):
         result = Calculator().tan_x(23)
-        self.assertEqual(0.424468483103, result)
+        self.assertEqual(0.424468483103, round(result, 12))
         result = Calculator().tan_x(-2)
-        self.assertEqual(-0.0349207694917, result)   
+        self.assertEqual(-0.0349207694917, round(result, 13))    
         result = Calculator().tan_x(0)
         self.assertEqual(0, result)        
         
 if __name__ == '__main__':
-        unittest.main()
-        
-
-        
-        
-        
-        
-        
-        
-        
+    unittest.main()
