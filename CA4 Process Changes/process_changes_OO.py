@@ -29,7 +29,7 @@ def get_commits(data):
                 details[2].strip().split(' ')[1],
                 int(details[3].strip().split(' ')[0]))
             changed_file_end_index = data.index('', index + 1)
-            commit.changed_paths = data[index + 3 : changed_file_end_index]    
+            commit.changed_path = data[index + 3 : changed_file_end_index]   
             commit.comment = data[changed_file_end_index + 1 :
                     changed_file_end_index + 1 + commit.number_of_lines]
                 
@@ -46,18 +46,19 @@ def read_file(any_file):
 
 def save_commits(commits, any_file):
     my_file = open(any_file, 'w')
-    my_file.write("revision,author,date,time,number_of_lines\n")
+    my_file.write("revision,author,date,time,number_of_lines,comment\n")
     for commit in commits:
         my_file.write(str(commit))
     my_file.close()
 
 if __name__ == '__main__':
     # open the file - and read all of the lines.
-    changes_file = 'changes_python.log'
-    data = read_file(changes_file)
+    change_file = 'changes_python.log'
+    data = read_file(change_file)
     print len(data)
     commits = get_commits(data)
     print len(commits)
     print commits[0]
     print commits[0].author
     save_commits(commits, 'changes.csv')
+    

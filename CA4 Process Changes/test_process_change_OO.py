@@ -19,9 +19,8 @@ class TestCommits(unittest.TestCase):
         self.assertEqual(['FTRPC-500: Frontier Android || Inconsistencey in My Activity screen',
                 'Client used systemAttribute name="Creation-Date" instead of versionCreated as version created.'],
                 commits[24].comment)
-        self.assertEqual(['FTRPC-500: Frontier Android || Inconsistencey in My Activity screen',
-                'Client used systemAttribute name="Creation-Date" instead of versionCreated as version created.'],
-                commits[24].comment)
+        self.assertEqual(['M /cloud/personal/client-international/android/branches/android-15.2-solutions/libs/model/src/com/biscay/client/android/model/util/sync/dv/SyncAdapter.java'],
+                commits[20].changed_path)
 
     def test_first_commit(self):
         commits = get_commits(self.data)
