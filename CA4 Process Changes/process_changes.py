@@ -1,3 +1,7 @@
+import sys
+import datetime
+
+
 def read_file(changes_file):
     # use strip to strip out spaces and trim the line.
     data = [line.strip() for line in open(changes_file, 'r')]
@@ -17,11 +21,13 @@ def get_commits(data):
             commit = {'revision': details[0].strip(),
                 'author': details[1].strip(),
                 'date': details[2].strip().split(' ') [0],
-                'time': details[2].strip().split(' ')[1],
+                'time': details[2].strip().split(' ')[1],                
+                'weekday': details[2].strip().split(' ')[3][1:],
+                'hour_of_day': details[2].strip().split(' ')[1] [:2], 
                 'number_of_lines': int(details[3].strip().split(' ')[0])
             }
             changed_file_end_index = data.index('', index + 1)
-            commit ['changed_path'] = data[index + 3 : changed_file_end_index]
+            commit ['changed_path'] = data[index + 3 : changed_file_end_index][0][0],
             commit ['comment'] = data[changed_file_end_index + 1 :
                         changed_file_end_index + 1 + commit ['number_of_lines']]
             # add details to the list of commits.
@@ -31,13 +37,16 @@ def get_commits(data):
             index = len(data)
     return commits
 
+
+
 def save_commits(commits, any_file):
     my_file = open(any_file, 'w')
-    my_file.write("revision, author, date, time, number_of_lines\n")
+    my_file.write("revision, author, date, time, hour_of_day, number_of_lines, change type, weekday, comment \n")
     for commit in commits:
         my_file.write(commit['revision'] + ',' + commit['author'] +
-                ',' + commit['date'] + ',' + commit['time'] + ','  + 
-                str(commit['number_of_lines']) + ',' + ' '.join(commit['comment']) + '\n')
+                ',' + commit['date'] + ',' + commit['time'] + ',' + commit['hour_of_day'] + ',' + str(commit['number_of_lines']) + ',' +  ''.join(commit['changed_path']) + 
+                ',' + commit['weekday'] + ''.join(commit['comment']) + '\n')
+    
     my_file.close()
             
     
